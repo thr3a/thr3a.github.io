@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>シャルロッテbotのinfo</title>
+    <link>https://thr3a.github.io/index.xml</link>
+    <description>Recent content on シャルロッテbotのinfo</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja</language>
+    <copyright>syarubot All rights reserved.</copyright>
+    <lastBuildDate>Wed, 26 Oct 2016 00:07:29 +0900</lastBuildDate>
+    <atom:link href="https://thr3a.github.io/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>hi</title>
+      <link>https://thr3a.github.io/post/hi/</link>
+      <pubDate>Wed, 26 Oct 2016 00:07:29 +0900</pubDate>
+      
+      <guid>https://thr3a.github.io/post/hi/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>26</title>
+      <link>https://thr3a.github.io/post/2016/10/26/</link>
+      <pubDate>Wed, 26 Oct 2016 00:07:08 +0900</pubDate>
+      
+      <guid>https://thr3a.github.io/post/2016/10/26/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>
