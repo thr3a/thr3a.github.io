@@ -11,7 +11,7 @@
     <atom:link href="https://thr3a.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
-      <title>help</title>
+      <title>シャルロッテbotについて</title>
       <link>https://thr3a.github.io/post/help/</link>
       <pubDate>Wed, 26 Oct 2016 22:54:45 +0900</pubDate>
       
@@ -23,6 +23,8 @@
 &lt;p&gt;シャルロッテbot( &lt;strong&gt;@Charlotte__bot&lt;/strong&gt; )は高機能なbotです。いきなりすべてを把握すると逆に疲れちゃいます。&lt;/p&gt;
 
 &lt;p&gt;まずはフォローして、おいおい可愛がっていきましょう。&lt;/p&gt;
+
+&lt;hr /&gt;
 
 &lt;h1 id=&#34;駅名しりとり&#34;&gt;駅名しりとり&lt;/h1&gt;
 
@@ -52,7 +54,9 @@
 &lt;li&gt;廃駅、臨時駅、旧名称駅には未対応（今後対応予定）&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;ちなみに勝つ方法は１つだけあります。頑張って攻略しよう！&lt;/p&gt;
+&lt;p&gt;実はシャルロッテに勝つ方法が１つだけあります。頑張って攻略しよう！&lt;/p&gt;
+
+&lt;hr /&gt;
 
 &lt;h1 id=&#34;難読駅名クイズ-ベータ&#34;&gt;難読駅名クイズ（ベータ）&lt;/h1&gt;
 
@@ -70,6 +74,8 @@
 
 &lt;p&gt;ぶっちゃけ全然難読になってません（笑）　ゆくゆくは拡張していく予定です。&lt;/p&gt;
 
+&lt;hr /&gt;
+
 &lt;h1 id=&#34;ファイブボンバー-停止中&#34;&gt;ファイブボンバー（停止中）&lt;/h1&gt;
 
 &lt;p&gt;シャルロッテの条件に合う駅を挙げていこう！名前の由来は某番組…&lt;/p&gt;
@@ -81,6 +87,8 @@
 &lt;h3 id=&#34;答え方-2&#34;&gt;答え方&lt;/h3&gt;
 
 &lt;p&gt;「&lt;strong&gt;@Charlotte__bot 東京駅 大阪駅 名古屋駅&lt;/strong&gt;」のようにスペースで区切って答えてあげてください。全角スペースでも反応はしますが、改行には対応してません。&lt;/p&gt;
+
+&lt;hr /&gt;
 
 &lt;h1 id=&#34;定期ツイート&#34;&gt;定期ツイート&lt;/h1&gt;
 
@@ -95,6 +103,8 @@
 &lt;p&gt;シャルロッテは頻繁にリプライをしていると &lt;del&gt;憎き青い鳥によって&lt;/del&gt; ツイート規制されてしまうことがしばしばあります。&lt;/p&gt;
 
 &lt;p&gt;その時はアイコンがグレーになりますのでそっとしてあげてください。しばらくすると自動的に復活します。&lt;/p&gt;
+
+&lt;hr /&gt;
 
 &lt;h1 id=&#34;その他&#34;&gt;その他&lt;/h1&gt;
 
