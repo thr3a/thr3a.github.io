@@ -7,16 +7,113 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
     <copyright>syarubot All rights reserved.</copyright>
-    <lastBuildDate>Wed, 26 Oct 2016 00:07:29 +0900</lastBuildDate>
+    <lastBuildDate>Wed, 26 Oct 2016 22:54:45 +0900</lastBuildDate>
     <atom:link href="https://thr3a.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
-      <title>hi</title>
-      <link>https://thr3a.github.io/post/hi/</link>
-      <pubDate>Wed, 26 Oct 2016 00:07:29 +0900</pubDate>
+      <title>help</title>
+      <link>https://thr3a.github.io/post/help/</link>
+      <pubDate>Wed, 26 Oct 2016 22:54:45 +0900</pubDate>
       
-      <guid>https://thr3a.github.io/post/hi/</guid>
-      <description></description>
+      <guid>https://thr3a.github.io/post/help/</guid>
+      <description>
+
+&lt;h1 id=&#34;まずはフォローから&#34;&gt;まずはフォローから！&lt;/h1&gt;
+
+&lt;p&gt;シャルロッテbot( &lt;strong&gt;@Charlotte__bot&lt;/strong&gt; )は高機能なbotです。いきなりすべてを把握すると逆に疲れちゃいます。&lt;/p&gt;
+
+&lt;p&gt;まずはフォローして、おいおい可愛がっていきましょう。&lt;/p&gt;
+
+&lt;h1 id=&#34;駅名しりとり&#34;&gt;駅名しりとり&lt;/h1&gt;
+
+&lt;p&gt;全知全能のシャルロッテと駅名でしりとりができます。&lt;/p&gt;
+
+&lt;h3 id=&#34;スタート&#34;&gt;スタート&lt;/h3&gt;
+
+&lt;p&gt;「&lt;strong&gt;駅名しりとり&lt;/strong&gt;」を含むリプライをすると開始します。&lt;/p&gt;
+
+&lt;h3 id=&#34;答え方&#34;&gt;答え方&lt;/h3&gt;
+
+&lt;p&gt;「&lt;strong&gt;@Charlotte__bot 東京駅&lt;/strong&gt;」のように答えてあげてください。最後に「駅」が付いてないと反応しません。&lt;/p&gt;
+
+&lt;p&gt;細かいルールは以下になります。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;最後が濁音・半濁点は清音でもOK
+
+&lt;ul&gt;
+&lt;li&gt;例) 神戸駅だと「べ」→「へ」なので「平和駅」&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;最後が小さい文字は大きくなります
+
+&lt;ul&gt;
+&lt;li&gt;例)西別所駅だと「ょ」→「よ」なので「横浜駅」&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;廃駅、臨時駅、旧名称駅には未対応（今後対応予定）&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;ちなみに勝つ方法は１つだけあります。頑張って攻略しよう！&lt;/p&gt;
+
+&lt;h1 id=&#34;難読駅名クイズ-ベータ&#34;&gt;難読駅名クイズ（ベータ）&lt;/h1&gt;
+
+&lt;p&gt;シャルロッテが出題する駅名クイズに何問答えられるかな？&lt;/p&gt;
+
+&lt;h3 id=&#34;スタート-1&#34;&gt;スタート&lt;/h3&gt;
+
+&lt;p&gt;「&lt;strong&gt;難読&lt;/strong&gt;」を含むリプライをすると開始します。&lt;/p&gt;
+
+&lt;h3 id=&#34;答え方-1&#34;&gt;答え方&lt;/h3&gt;
+
+&lt;p&gt;「&lt;strong&gt;@Charlotte__bot とうきょう駅&lt;/strong&gt;」のように答えてあげてください。最後に「えき」が付いてないと反応しません。&lt;/p&gt;
+
+&lt;h3 id=&#34;備考&#34;&gt;備考&lt;/h3&gt;
+
+&lt;p&gt;ぶっちゃけ全然難読になってません（笑）　ゆくゆくは拡張していく予定です。&lt;/p&gt;
+
+&lt;h1 id=&#34;ファイブボンバー-停止中&#34;&gt;ファイブボンバー（停止中）&lt;/h1&gt;
+
+&lt;p&gt;シャルロッテの条件に合う駅を挙げていこう！名前の由来は某番組…&lt;/p&gt;
+
+&lt;h3 id=&#34;スタート-2&#34;&gt;スタート&lt;/h3&gt;
+
+&lt;p&gt;「ファイブボンバー」を含むリプライをすると開始します。&lt;/p&gt;
+
+&lt;h3 id=&#34;答え方-2&#34;&gt;答え方&lt;/h3&gt;
+
+&lt;p&gt;「&lt;strong&gt;@Charlotte__bot 東京駅 大阪駅 名古屋駅&lt;/strong&gt;」のようにスペースで区切って答えてあげてください。全角スペースでも反応はしますが、改行には対応してません。&lt;/p&gt;
+
+&lt;h1 id=&#34;定期ツイート&#34;&gt;定期ツイート&lt;/h1&gt;
+
+&lt;p&gt;シャルロッテがあなたのツイートを拾うかも？&lt;/p&gt;
+
+&lt;p&gt;一定時間ごとにシャルロッテがそのときのタイムラインに応じたツイートをします。リプライやRTは除外していますのでご安心ください。&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h1 id=&#34;規制について&#34;&gt;規制について&lt;/h1&gt;
+
+&lt;p&gt;シャルロッテは頻繁にリプライをしていると &lt;del&gt;憎き青い鳥によって&lt;/del&gt; ツイート規制されてしまうことがしばしばあります。&lt;/p&gt;
+
+&lt;p&gt;その時はアイコンがグレーになりますのでそっとしてあげてください。しばらくすると自動的に復活します。&lt;/p&gt;
+
+&lt;h1 id=&#34;その他&#34;&gt;その他&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;駅データは駅データ.jpやWikiPediaを利用しています。
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.ekidata.jp/&#34;&gt;https://www.ekidata.jp/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://ja.wikipedia.org/&#34;&gt;https://ja.wikipedia.org/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;アイコンはびんご氏 許可を頂いております&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&#34;こんとりびゅーたー&#34;&gt;こんとりびゅーたー&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;@amanekey&lt;/li&gt;
+&lt;/ul&gt;
+</description>
     </item>
     
     <item>
