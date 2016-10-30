@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>シャルロッテbotのinfo</title>
+    <title>シャルロッテbot開発ノート</title>
     <link>https://thr3a.github.io/tags/index.xml</link>
-    <description>Recent content on シャルロッテbotのinfo</description>
+    <description>Recent content on シャルロッテbot開発ノート</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
     <copyright>syarubot All rights reserved.</copyright>
