@@ -7,8 +7,42 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
     <copyright>syarubot All rights reserved.</copyright>
-    <lastBuildDate>Mon, 31 Oct 2016 02:28:03 +0900</lastBuildDate>
+    <lastBuildDate>Tue, 01 Nov 2016 08:50:00 +0900</lastBuildDate>
     <atom:link href="https://thr3a.github.io/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>ファイブボンバーとパス機能</title>
+      <link>https://thr3a.github.io/post/2016/11/01/fivebomberv2/</link>
+      <pubDate>Tue, 01 Nov 2016 08:50:00 +0900</pubDate>
+      
+      <guid>https://thr3a.github.io/post/2016/11/01/fivebomberv2/</guid>
+      <description>
+
+&lt;p&gt;今回、２つの機能が実装しました&lt;/p&gt;
+
+&lt;h1 id=&#34;ファイブボンバー&#34;&gt;ファイブボンバー&lt;/h1&gt;
+
+&lt;p&gt;ファイブボンバー機能が復活しました&lt;/p&gt;
+
+&lt;p&gt;シャルロッテに「&lt;strong&gt;ファイブボンバー&lt;/strong&gt;」を含むリプライをすると遊べます。&lt;/p&gt;
+
+&lt;h1 id=&#34;パス&#34;&gt;パス&lt;/h1&gt;
+
+&lt;p&gt;分からない問題をシャルロッテから出題されたときに「パス」というとスキップできます。&lt;/p&gt;
+
+&lt;p&gt;平成28年11月1日現在、パス機能が実装されているのは以下のゲームです&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;駅名しりとり&lt;/li&gt;
+&lt;li&gt;難読駅名クイズ&lt;/li&gt;
+&lt;li&gt;ファイブボンバー&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;臨時駅の対応はもう少し時間がかかりそうです&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>トリックオアトリート</title>
