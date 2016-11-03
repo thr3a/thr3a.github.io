@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta property="og:type" content="article">
+<meta property="og:title" content="シャルロッテbot開発ノート">
+<meta property="og:site_name" content="シャルロッテbot開発ノート">
+<meta property="og:description" content="シャルロッテbotの新機能/変更をお伝えします">
+<meta property="og:image" content="https://thr3a.github.io/images/logo.jpg">
+<meta property="og:url" content="https://thr3a.github.io/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="generator" content="Hugo 0.17" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="//fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/github.min.css">
+<link rel="stylesheet" href="/css/normalize.css">
+<link rel="stylesheet" href="/css/skeleton.css">
+<link rel="stylesheet" href="/css/custom.css">
+<link rel="alternate" href="/index.xml" type="application/rss+xml" title="シャルロッテbot開発ノート">
+<title>シャルロッテbotの開発環境構築 - シャルロッテbot開発ノート</title>
+</head>
+<body>
+
+<div class="container">
+
+	<header role="banner">
+		<div class="header-logo">
+			<a href="/"><img src="/images/logo.jpg" width="60" height="60" alt="シャルロッテbot開発ノート"></a>
+		</div>
+		
+	</header>
+
+	<main role="main">
+		<article itemscope itemtype="http://schema.org/BlogPosting">
+			<h1 class="entry-title" itemprop="headline">シャルロッテbotの開発環境構築</h1>
+			<span class="entry-meta"><time itemprop="datePublished" datetime="2016-11-02">November 02, 2016</time></span>
+			<section itemprop="entry-text">
+				
+
+<p>※ <strong>この記事は開発者向けに書かれたものです。</strong></p>
+
+<h1 id="シャルロッテbotの開発環境構築">シャルロッテbotの開発環境構築</h1>
+
+<p>「シャルbotをローカルで動かしたい！」という人向け</p>
+
+<h1 id="環境">環境</h1>
+
+<p>シャルbotは開発機がMac OSで運用はUbuntu14.04ですが、他のOSでも正しく設定さえすれば動くと思います。</p>
+
+<ul>
+<li>ruby 2.3.1
+
+<ul>
+<li>ruby 2.xなら大丈夫（未検証</li>
+<li>要Bundler(gem install bunderでインストールできます)</li>
+</ul></li>
+<li>MySQL 5.x
+
+<ul>
+<li>運用では互換DBであるMariaDBを使用しています</li>
+<li>SQLite不可</li>
+</ul></li>
+<li>Mecab
+
+<ul>
+<li>UTF-8のみ</li>
+<li>運用では精度を高めるため<a href="https://github.com/neologd/mecab-ipadic-neologd">mecab-ipadic-neologd</a>の辞書を使っていますがデフォルト辞書でも可</li>
+</ul></li>
+</ul>
+
+<h1 id="手順">手順</h1>
+
+<h2 id="ダウンロード">ダウンロード</h2>
+
+<pre><code>git clone https://github.com/thr3a/syarubot.git
+cd ./syarubot
+bundle install
+</code></pre>
+
+<h2 id="データベースの設定">データベースの設定</h2>
+
+<p>syarubot/config/database.ymlを作成し、以下を記述します。</p>
+
+<pre><code class="language-yml">default: &amp;default
+  adapter: mysql2
+  encoding: utf8
+  host: MySQLサーバーのホスト名
+  username: ユーザー名
+  password: パスワード
+  pool: 5
+
+development:
+  &lt;&lt;: *default
+  database: syaru
+
+production:
+  &lt;&lt;: *default
+  database: syaru
+
+station:
+  &lt;&lt;: *default
+  database: station
+
+test:
+  &lt;&lt;: *default
+</code></pre>
+
+<p>歴史的な経緯により通常のRailsのやり方ではデータベースの構築ができません。sayrubotディレクトリ上で以下のコマンドを実行します。</p>
+
+<pre><code>bundle exec rails db &lt; db/syaru_structure.sql
+bundle exec rails db -e station &lt; db/station_structure.sql
+</code></pre>
+
+<p>syaru,stationデータベースが作成されれば成功です。</p>
+
+<p>おそらくここで <code>bundle exec rails c</code>をエラーなく実行できるはずです。</p>
+
+<h2 id="twitter-apiキーの設定">Twitter APIキーの設定</h2>
+
+<p>syarubot/config/secrets.ymlを作成し、以下を記述します。</p>
+
+<pre><code class="language-yml">development:
+  secret_key_base: 7e583311bb7ace5a59a0162f2bc9b87dc93d0004011004e05ea00e44dd24cd8407823c9816dd4e34f0fff35df63ad8c2b717647e105bc285175177a3ec9715e7
+  consumer_key: &quot;以下４つはTwitterAPIの認証に必要な４つのキー&quot;
+  consumer_secret: &quot;xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx&quot;
+  access_token: &quot;xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx&quot;
+  access_token_secret: &quot;xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx&quot;
+  own_name: &quot;bot自身のアカウント名 @は含めません&quot;
+
+test:
+  secret_key_base: 3c9edea0d21568e91f7ff51145da51702175a89b6986065d475263f8016ca6a8cc3cee834a1a3829df259ffb57db072bf0ea5739fee7a9cd16175703d4d300fd
+
+# Do not keep production secrets in the repository,
+# instead read values from the environment.
+production:
+  secret_key_base: *****************************************************************
+  consumer_key: &quot;基本的にはこっちは空で可&quot;
+  consumer_secret: &quot;&quot;
+  access_token: &quot;&quot;
+  access_token_secret: &quot;&quot;
+  own_name: &quot;Charlotte__bot&quot;
+</code></pre>
+
+<p>設定後に <code>bundle exec rake bot:start</code>をしたあとに「シャルロッテ」に反応すればOKです。</p>
+
+<h2 id="mecabの設定">Mecabの設定</h2>
+
+<p>すでにターミナル上からmecabコマンドが実行できることを確認してください。</p>
+
+<p>デフォルトの辞書パスは「usr/local/lib/mecab/dic/mecab-ipadic-neologd」です。変更する場合は config/environments/development.rb 内の <code>config.mecab_dic_path</code> の値を変更してください。</p>
+
+<h2 id="その他">その他</h2>
+
+<p>当然ですがDBの中身が空っぽだとしりとりすらできません。データは各自でご用意ください。</p>
+
+			</section>
+		</article>
+	</main>
+
+
+	<footer role="contentinfo">
+		<div class="hr"></div>
+		<div class="footer-link">
+			
+			<a href="https://twitter.com/Charlotte__bot" target="_blank">Twitter</a>
+			
+			
+		</div>
+		<div class="copyright">Copyright &copy; syarubot All rights reserved.</div>
+	</footer>
+
+</div>
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+</body>
+</html>

@@ -10,6 +10,258 @@
     <atom:link href="https://thr3a.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>シャルロッテbotの開発環境構築</title>
+      <link>https://thr3a.github.io/post/dev-setup/</link>
+      <pubDate>Wed, 02 Nov 2016 01:14:11 +0900</pubDate>
+      
+      <guid>https://thr3a.github.io/post/dev-setup/</guid>
+      <description>
+
+&lt;p&gt;※ &lt;strong&gt;この記事は開発者向けに書かれたものです。&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;シャルロッテbotの開発環境構築&#34;&gt;シャルロッテbotの開発環境構築&lt;/h1&gt;
+
+&lt;p&gt;「シャルbotをローカルで動かしたい！」という人向け&lt;/p&gt;
+
+&lt;h1 id=&#34;環境&#34;&gt;環境&lt;/h1&gt;
+
+&lt;p&gt;シャルbotは開発機がMac OSで運用はUbuntu14.04ですが、他のOSでも正しく設定さえすれば動くと思います。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;ruby 2.3.1
+
+&lt;ul&gt;
+&lt;li&gt;ruby 2.xなら大丈夫（未検証&lt;/li&gt;
+&lt;li&gt;要Bundler(gem install bunderでインストールできます)&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;MySQL 5.x
+
+&lt;ul&gt;
+&lt;li&gt;運用では互換DBであるMariaDBを使用しています&lt;/li&gt;
+&lt;li&gt;SQLite不可&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Mecab
+
+&lt;ul&gt;
+&lt;li&gt;UTF-8のみ&lt;/li&gt;
+&lt;li&gt;運用では精度を高めるため&lt;a href=&#34;https://github.com/neologd/mecab-ipadic-neologd&#34;&gt;mecab-ipadic-neologd&lt;/a&gt;の辞書を使っていますがデフォルト辞書でも可&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&#34;手順&#34;&gt;手順&lt;/h1&gt;
+
+&lt;h2 id=&#34;ダウンロード&#34;&gt;ダウンロード&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;git clone https://github.com/thr3a/syarubot.git
+cd ./syarubot
+bundle install
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;データベースの設定&#34;&gt;データベースの設定&lt;/h2&gt;
+
+&lt;p&gt;syarubot/config/database.ymlを作成し、以下を記述します。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-yml&#34;&gt;default: &amp;amp;default
+  adapter: mysql2
+  encoding: utf8
+  host: MySQLサーバーのホスト名
+  username: ユーザー名
+  password: パスワード
+  pool: 5
+
+development:
+  &amp;lt;&amp;lt;: *default
+  database: syaru
+
+production:
+  &amp;lt;&amp;lt;: *default
+  database: syaru
+
+station:
+  &amp;lt;&amp;lt;: *default
+  database: station
+
+test:
+  &amp;lt;&amp;lt;: *default
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;歴史的な経緯により通常のRailsのやり方ではデータベースの構築ができません。sayrubotディレクトリ上で以下のコマンドを実行します。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;bundle exec rails db &amp;lt; db/syaru_structure.sql
+bundle exec rails db -e station &amp;lt; db/station_structure.sql
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;syaru,stationデータベースが作成されれば成功です。&lt;/p&gt;
+
+&lt;p&gt;おそらくここで &lt;code&gt;bundle exec rails c&lt;/code&gt;をエラーなく実行できるはずです。&lt;/p&gt;
+
+&lt;h2 id=&#34;twitter-apiキーの設定&#34;&gt;Twitter APIキーの設定&lt;/h2&gt;
+
+&lt;p&gt;syarubot/config/secrets.ymlを作成し、以下を記述します。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-yml&#34;&gt;development:
+  secret_key_base: 7e583311bb7ace5a59a0162f2bc9b87dc93d0004011004e05ea00e44dd24cd8407823c9816dd4e34f0fff35df63ad8c2b717647e105bc285175177a3ec9715e7
+  consumer_key: &amp;quot;以下４つはTwitterAPIの認証に必要な４つのキー&amp;quot;
+  consumer_secret: &amp;quot;xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx&amp;quot;
+  access_token: &amp;quot;xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx&amp;quot;
+  access_token_secret: &amp;quot;xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx&amp;quot;
+  own_name: &amp;quot;bot自身のアカウント名 @は含めません&amp;quot;
+
+test:
+  secret_key_base: 3c9edea0d21568e91f7ff51145da51702175a89b6986065d475263f8016ca6a8cc3cee834a1a3829df259ffb57db072bf0ea5739fee7a9cd16175703d4d300fd
+
+# Do not keep production secrets in the repository,
+# instead read values from the environment.
+production:
+  secret_key_base: *****************************************************************
+  consumer_key: &amp;quot;基本的にはこっちは空で可&amp;quot;
+  consumer_secret: &amp;quot;&amp;quot;
+  access_token: &amp;quot;&amp;quot;
+  access_token_secret: &amp;quot;&amp;quot;
+  own_name: &amp;quot;Charlotte__bot&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;設定後に &lt;code&gt;bundle exec rake bot:start&lt;/code&gt;をしたあとに「シャルロッテ」に反応すればOKです。&lt;/p&gt;
+
+&lt;h2 id=&#34;mecabの設定&#34;&gt;Mecabの設定&lt;/h2&gt;
+
+&lt;p&gt;すでにターミナル上からmecabコマンドが実行できることを確認してください。&lt;/p&gt;
+
+&lt;p&gt;デフォルトの辞書パスは「usr/local/lib/mecab/dic/mecab-ipadic-neologd」です。変更する場合は config/environments/development.rb 内の &lt;code&gt;config.mecab_dic_path&lt;/code&gt; の値を変更してください。&lt;/p&gt;
+
+&lt;h2 id=&#34;その他&#34;&gt;その他&lt;/h2&gt;
+
+&lt;p&gt;当然ですがDBの中身が空っぽだとしりとりすらできません。データは各自でご用意ください。&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>シャルロッテbotの開発環境構築</title>
+      <link>https://thr3a.github.io/post/dev-setup/</link>
+      <pubDate>Wed, 02 Nov 2016 01:14:11 +0900</pubDate>
+      
+      <guid>https://thr3a.github.io/post/dev-setup/</guid>
+      <description>
+
+&lt;p&gt;※ &lt;strong&gt;この記事は開発者向けに書かれたものです。&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;シャルロッテbotの開発環境構築&#34;&gt;シャルロッテbotの開発環境構築&lt;/h1&gt;
+
+&lt;p&gt;「シャルbotをローカルで動かしたい！」という人向け&lt;/p&gt;
+
+&lt;h1 id=&#34;環境&#34;&gt;環境&lt;/h1&gt;
+
+&lt;p&gt;シャルbotは開発機がMac OSで運用はUbuntu14.04ですが、他のOSでも正しく設定さえすれば動くと思います。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;ruby 2.3.1
+
+&lt;ul&gt;
+&lt;li&gt;ruby 2.xなら大丈夫（未検証&lt;/li&gt;
+&lt;li&gt;要Bundler(gem install bunderでインストールできます)&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;MySQL 5.x
+
+&lt;ul&gt;
+&lt;li&gt;運用では互換DBであるMariaDBを使用しています&lt;/li&gt;
+&lt;li&gt;SQLite不可&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Mecab
+
+&lt;ul&gt;
+&lt;li&gt;UTF-8のみ&lt;/li&gt;
+&lt;li&gt;運用では精度を高めるため&lt;a href=&#34;https://github.com/neologd/mecab-ipadic-neologd&#34;&gt;mecab-ipadic-neologd&lt;/a&gt;の辞書を使っていますがデフォルト辞書でも可&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&#34;手順&#34;&gt;手順&lt;/h1&gt;
+
+&lt;h2 id=&#34;ダウンロード&#34;&gt;ダウンロード&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;git clone https://github.com/thr3a/syarubot.git
+cd ./syarubot
+bundle install
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;データベースの設定&#34;&gt;データベースの設定&lt;/h2&gt;
+
+&lt;p&gt;syarubot/config/database.ymlを作成し、以下を記述します。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-yml&#34;&gt;default: &amp;amp;default
+  adapter: mysql2
+  encoding: utf8
+  host: MySQLサーバーのホスト名
+  username: ユーザー名
+  password: パスワード
+  pool: 5
+
+development:
+  &amp;lt;&amp;lt;: *default
+  database: syaru
+
+production:
+  &amp;lt;&amp;lt;: *default
+  database: syaru
+
+station:
+  &amp;lt;&amp;lt;: *default
+  database: station
+
+test:
+  &amp;lt;&amp;lt;: *default
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;歴史的な経緯により通常のRailsのやり方ではデータベースの構築ができません。sayrubotディレクトリ上で以下のコマンドを実行します。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;bundle exec rails db &amp;lt; db/syaru_structure.sql
+bundle exec rails db -e station &amp;lt; db/station_structure.sql
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;syaru,stationデータベースが作成されれば成功です。&lt;/p&gt;
+
+&lt;p&gt;おそらくここで &lt;code&gt;bundle exec rails c&lt;/code&gt;をエラーなく実行できるはずです。&lt;/p&gt;
+
+&lt;h2 id=&#34;twitter-apiキーの設定&#34;&gt;Twitter APIキーの設定&lt;/h2&gt;
+
+&lt;p&gt;syarubot/config/secrets.ymlを作成し、以下を記述します。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-yml&#34;&gt;development:
+  secret_key_base: 7e583311bb7ace5a59a0162f2bc9b87dc93d0004011004e05ea00e44dd24cd8407823c9816dd4e34f0fff35df63ad8c2b717647e105bc285175177a3ec9715e7
+  consumer_key: &amp;quot;以下４つはTwitterAPIの認証に必要な４つのキー&amp;quot;
+  consumer_secret: &amp;quot;xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx&amp;quot;
+  access_token: &amp;quot;xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx&amp;quot;
+  access_token_secret: &amp;quot;xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx&amp;quot;
+  own_name: &amp;quot;bot自身のアカウント名 @は含めません&amp;quot;
+
+test:
+  secret_key_base: 3c9edea0d21568e91f7ff51145da51702175a89b6986065d475263f8016ca6a8cc3cee834a1a3829df259ffb57db072bf0ea5739fee7a9cd16175703d4d300fd
+
+# Do not keep production secrets in the repository,
+# instead read values from the environment.
+production:
+  secret_key_base: *****************************************************************
+  consumer_key: &amp;quot;基本的にはこっちは空で可&amp;quot;
+  consumer_secret: &amp;quot;&amp;quot;
+  access_token: &amp;quot;&amp;quot;
+  access_token_secret: &amp;quot;&amp;quot;
+  own_name: &amp;quot;Charlotte__bot&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;設定後に &lt;code&gt;bundle exec rake bot:start&lt;/code&gt;をしたあとに「シャルロッテ」に反応すればOKです。&lt;/p&gt;
+
+&lt;h2 id=&#34;mecabの設定&#34;&gt;Mecabの設定&lt;/h2&gt;
+
+&lt;p&gt;すでにターミナル上からmecabコマンドが実行できることを確認してください。&lt;/p&gt;
+
+&lt;p&gt;デフォルトの辞書パスは「usr/local/lib/mecab/dic/mecab-ipadic-neologd」です。変更する場合は config/environments/development.rb 内の &lt;code&gt;config.mecab_dic_path&lt;/code&gt; の値を変更してください。&lt;/p&gt;
+
+&lt;h2 id=&#34;その他&#34;&gt;その他&lt;/h2&gt;
+
+&lt;p&gt;当然ですがDBの中身が空っぽだとしりとりすらできません。データは各自でご用意ください。&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>ファイブボンバーとパス機能</title>
       <link>https://thr3a.github.io/post/2016/11/01/fivebomberv2/</link>
       <pubDate>Tue, 01 Nov 2016 08:50:00 +0900</pubDate>
@@ -147,6 +399,7 @@
 &lt;li&gt;例)西別所駅だと「ょ」→「よ」なので「横浜駅」&lt;/li&gt;
 &lt;/ul&gt;&lt;/li&gt;
 &lt;li&gt;廃駅、臨時駅、旧名称駅には未対応（今後対応予定）&lt;/li&gt;
+&lt;li&gt;「パス」とリプライすると問題をスキップできます&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;実はシャルロッテに勝つ方法が１つだけあります。頑張って攻略しよう！&lt;/p&gt;
@@ -163,7 +416,9 @@
 
 &lt;h3 id=&#34;答え方-1&#34;&gt;答え方&lt;/h3&gt;
 
-&lt;p&gt;「&lt;strong&gt;@Charlotte__bot とうきょう駅&lt;/strong&gt;」のように答えてあげてください。最後に「えき」が付いてないと反応しません。&lt;/p&gt;
+&lt;p&gt;「&lt;strong&gt;@Charlotte__bot とうきょうえき&lt;/strong&gt;」のように答えてあげてください。最後に「えき」が付いてないと反応しません。&lt;/p&gt;
+
+&lt;p&gt;わからないときは「パス」とリプライすると問題をスキップできます。&lt;/p&gt;
 
 &lt;h3 id=&#34;備考&#34;&gt;備考&lt;/h3&gt;
 
@@ -182,6 +437,8 @@
 &lt;h3 id=&#34;答え方-2&#34;&gt;答え方&lt;/h3&gt;
 
 &lt;p&gt;「&lt;strong&gt;@Charlotte__bot 東京駅 大阪駅 名古屋駅&lt;/strong&gt;」のようにスペースで区切って答えてあげてください。全角スペースでも反応はしますが、改行には対応してません。&lt;/p&gt;
+
+&lt;p&gt;わからないときは「パス」とリプライすると問題をスキップできます。&lt;/p&gt;
 
 &lt;hr /&gt;
 
@@ -213,7 +470,7 @@
 &lt;li&gt;アイコンはびんご氏 許可を頂いております&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h1 id=&#34;こんとりびゅーたー&#34;&gt;こんとりびゅーたー&lt;/h1&gt;
+&lt;h1 id=&#34;作者&#34;&gt;作者&lt;/h1&gt;
 
 &lt;ul&gt;
 &lt;li&gt;@amanekey&lt;/li&gt;
@@ -263,6 +520,7 @@
 &lt;li&gt;例)西別所駅だと「ょ」→「よ」なので「横浜駅」&lt;/li&gt;
 &lt;/ul&gt;&lt;/li&gt;
 &lt;li&gt;廃駅、臨時駅、旧名称駅には未対応（今後対応予定）&lt;/li&gt;
+&lt;li&gt;「パス」とリプライすると問題をスキップできます&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;実はシャルロッテに勝つ方法が１つだけあります。頑張って攻略しよう！&lt;/p&gt;
@@ -279,7 +537,9 @@
 
 &lt;h3 id=&#34;答え方-1&#34;&gt;答え方&lt;/h3&gt;
 
-&lt;p&gt;「&lt;strong&gt;@Charlotte__bot とうきょう駅&lt;/strong&gt;」のように答えてあげてください。最後に「えき」が付いてないと反応しません。&lt;/p&gt;
+&lt;p&gt;「&lt;strong&gt;@Charlotte__bot とうきょうえき&lt;/strong&gt;」のように答えてあげてください。最後に「えき」が付いてないと反応しません。&lt;/p&gt;
+
+&lt;p&gt;わからないときは「パス」とリプライすると問題をスキップできます。&lt;/p&gt;
 
 &lt;h3 id=&#34;備考&#34;&gt;備考&lt;/h3&gt;
 
@@ -298,6 +558,8 @@
 &lt;h3 id=&#34;答え方-2&#34;&gt;答え方&lt;/h3&gt;
 
 &lt;p&gt;「&lt;strong&gt;@Charlotte__bot 東京駅 大阪駅 名古屋駅&lt;/strong&gt;」のようにスペースで区切って答えてあげてください。全角スペースでも反応はしますが、改行には対応してません。&lt;/p&gt;
+
+&lt;p&gt;わからないときは「パス」とリプライすると問題をスキップできます。&lt;/p&gt;
 
 &lt;hr /&gt;
 
@@ -329,7 +591,7 @@
 &lt;li&gt;アイコンはびんご氏 許可を頂いております&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h1 id=&#34;こんとりびゅーたー&#34;&gt;こんとりびゅーたー&lt;/h1&gt;
+&lt;h1 id=&#34;作者&#34;&gt;作者&lt;/h1&gt;
 
 &lt;ul&gt;
 &lt;li&gt;@amanekey&lt;/li&gt;
